@@ -1,5 +1,6 @@
 package com.example.todolist.presenter
 
+import android.R.attr.priority
 import com.example.todolist.contract.TaskContract
 import com.example.todolist.model.Category
 import com.example.todolist.model.Priority
@@ -39,18 +40,25 @@ class TaskPresenter(
     }
 
     override fun filterByCategory(category: Category) {
-        TODO("Not yet implemented")
+        val filteredList = tasks.filter { it.category == category }
+        view?.displayTasks(filteredList)
     }
 
     override fun filterByPriority(priority: Priority) {
-        TODO("Not yet implemented")
+        val filteredList = tasks.filter { it.priority == priority }
+        view?.displayTasks(filteredList)
     }
 
     override fun filterByStatus(isDone: Boolean) {
-        TODO("Not yet implemented")
+        val filteredList = tasks.filter { it.isDone == isDone }
+        view?.displayTasks(filteredList)
     }
 
     override fun toggleTaskStatus(task: Task) {
-        TODO("Not yet implemented")
+        val index = tasks.indexOfFirst {it.id == task.id}
+        if (index != -1) {
+            tasks[index].isDone = !tasks[index].isDone
+            view?.displayTasks(tasks)
+        }
     }
 }
